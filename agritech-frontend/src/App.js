@@ -1,4 +1,32 @@
 import React from "react";
+import {
+  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
+  BarChart, Bar, PieChart, Pie, Cell
+} from "recharts";
+
+// Sample Data
+const cropPriceData = [
+  { month: "Jan", Maize: 30, Beans: 85, Tomatoes: 55 },
+  { month: "Feb", Maize: 32, Beans: 87, Tomatoes: 60 },
+  { month: "Mar", Maize: 35, Beans: 90, Tomatoes: 62 },
+  { month: "Apr", Maize: 36, Beans: 92, Tomatoes: 65 },
+];
+
+const rainfallData = [
+  { month: "Jan", Rainfall: 50 },
+  { month: "Feb", Rainfall: 70 },
+  { month: "Mar", Rainfall: 120 },
+  { month: "Apr", Rainfall: 90 },
+];
+
+const livestockData = [
+  { name: "Cattle", value: 400 },
+  { name: "Goats", value: 300 },
+  { name: "Sheep", value: 200 },
+  { name: "Poultry", value: 600 },
+];
+
+const COLORS = ["#2e7d32", "#81c784", "#388e3c", "#a5d6a7"];
 
 function App() {
   const scrollTo = (id) => {
@@ -15,8 +43,9 @@ function App() {
           <ul style={{ listStyle: "none", padding: 0 }}>
             <li style={{ margin: "1rem 0", cursor: "pointer" }} onClick={() => scrollTo("services")}>🚜 Services</li>
             <li style={{ margin: "1rem 0", cursor: "pointer" }} onClick={() => scrollTo("climate")}>🌱 Climate</li>
-            <li style={{ margin: "1rem 0", cursor: "pointer" }} onClick={() => scrollTo("market")}>🌾 Market Prices</li>
+            <li style={{ margin: "1rem 0", cursor: "pointer" }} onClick={() => scrollTo("market")}>🌾 Market</li>
             <li style={{ margin: "1rem 0", cursor: "pointer" }} onClick={() => scrollTo("education")}>📚 Education</li>
+            <li style={{ margin: "1rem 0", cursor: "pointer" }} onClick={() => scrollTo("charts")}>📊 Analytics</li>
             <li style={{ margin: "1rem 0", cursor: "pointer" }} onClick={() => scrollTo("contact")}>📞 Contact</li>
           </ul>
         </nav>
@@ -24,6 +53,15 @@ function App() {
 
       {/* Main Content */}
       <main style={{ flex: 1, backgroundColor: "#f5f9f6", padding: "2rem" }}>
+        {/* Hero Image */}
+        <div style={{ marginBottom: "2rem" }}>
+          <img
+            src="https://source.unsplash.com/1200x400/?farm,agriculture"
+            alt="Agriculture"
+            style={{ width: "100%", borderRadius: "8px" }}
+          />
+        </div>
+
         {/* Services */}
         <section id="services" style={{ marginBottom: "2rem", backgroundColor: "white", padding: "1.5rem", borderRadius: "8px", boxShadow: "0 2px 5px rgba(0,0,0,0.1)" }}>
           <h2>🚜 Farmer Services</h2>
@@ -35,6 +73,7 @@ function App() {
             <li>Fertilizer and input supply chain</li>
             <li>Farmer cooperative support</li>
           </ul>
+          <img src="https://source.unsplash.com/800x400/?tractor,field" alt="Farmer Services" style={{ width: "100%", marginTop: "1rem", borderRadius: "8px" }} />
         </section>
 
         {/* Climate Action */}
@@ -49,6 +88,7 @@ function App() {
             <li>Water harvesting projects</li>
             <li>Renewable energy for farms</li>
           </ul>
+          <img src="https://source.unsplash.com/800x400/?trees,climate" alt="Climate Action" style={{ width: "100%", marginTop: "1rem", borderRadius: "8px" }} />
         </section>
 
         {/* Market Prices */}
@@ -69,9 +109,10 @@ function App() {
               <tr><td>Cabbages</td><td>25</td></tr>
             </tbody>
           </table>
+          <img src="https://source.unsplash.com/800x400/?market,vegetables" alt="Market" style={{ width: "100%", marginTop: "1rem", borderRadius: "8px" }} />
         </section>
 
-        {/* Farmer Education */}
+        {/* Education */}
         <section id="education" style={{ marginBottom: "2rem", backgroundColor: "white", padding: "1.5rem", borderRadius: "8px", boxShadow: "0 2px 5px rgba(0,0,0,0.1)" }}>
           <h2>📚 Farmer Education</h2>
           <p>Access free resources and training on sustainable agriculture:</p>
@@ -81,6 +122,61 @@ function App() {
             <li>Webinars on climate-smart farming</li>
             <li>Mobile app tips for crop disease detection</li>
           </ul>
+          <img src="https://source.unsplash.com/800x400/?farmers,training" alt="Education" style={{ width: "100%", marginTop: "1rem", borderRadius: "8px" }} />
+        </section>
+
+        {/* Analytics / Charts */}
+        <section id="charts" style={{ marginBottom: "2rem", backgroundColor: "white", padding: "1.5rem", borderRadius: "8px", boxShadow: "0 2px 5px rgba(0,0,0,0.1)" }}>
+          <h2>📊 Analytics Dashboard</h2>
+
+          {/* Crop Prices Trend */}
+          <h3>Crop Price Trends</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={cropPriceData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="Maize" stroke="#2e7d32" />
+              <Line type="monotone" dataKey="Beans" stroke="#388e3c" />
+              <Line type="monotone" dataKey="Tomatoes" stroke="#81c784" />
+            </LineChart>
+          </ResponsiveContainer>
+
+          {/* Rainfall Pattern */}
+          <h3>Rainfall Pattern</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={rainfallData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="month" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="Rainfall" fill="#2e7d32" />
+            </BarChart>
+          </ResponsiveContainer>
+
+          {/* Livestock Distribution */}
+          <h3>Livestock Distribution</h3>
+          <ResponsiveContainer width="100%" height={300}>
+            <PieChart>
+              <Pie
+                data={livestockData}
+                dataKey="value"
+                nameKey="name"
+                cx="50%"
+                cy="50%"
+                outerRadius={100}
+                label
+              >
+                {livestockData.map((entry, index) => (
+                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                ))}
+              </Pie>
+              <Tooltip />
+            </PieChart>
+          </ResponsiveContainer>
         </section>
 
         {/* Contact */}
@@ -90,7 +186,6 @@ function App() {
           <p>Phone: +254 700 123456</p>
         </section>
 
-        {/* Footer */}
         <footer style={{ marginTop: "2rem", textAlign: "center", color: "#555" }}>
           <p>&copy; 2025 Agritech Hub. All Rights Reserved.</p>
         </footer>
